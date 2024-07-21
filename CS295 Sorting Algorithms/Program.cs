@@ -15,7 +15,7 @@ namespace SortingAlgorithms
             stopwatch.Start();
             BubbleSort(arr1);
             stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed.ToString());
+            /// Console.WriteLine(stopwatch.Elapsed.ToString());
             int[] arr2 = { 90, 3, 2, 56, 32, 34, 65, 68, 76, 1, 0, 100, 8 };
             //PrintArray(arr2);
             //InsertionSort(arr2);
@@ -24,20 +24,35 @@ namespace SortingAlgorithms
             stopwatch.Start();
             SelectionSort(arr1);
             stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed.ToString());
+            /// Console.WriteLine(stopwatch.Elapsed.ToString());
 
             stopwatch.Restart();
             stopwatch.Start();
             InsertionSort(arr1);
             stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed.ToString());
+            /// Console.WriteLine(stopwatch.Elapsed.ToString());
+            
+            Student student1 = new Student("Jill Stein", 4.0);
+
+            Student student2 = new Student("Matias", 3.0);
+
+            Student student3 = new Student("Matt", 3.9);
+
+            Student student4 = new Student("Biden", 0.1);
+
+            Student student5 = new Student("Carlos", 2.4);
+
+
+            Student[] students = { student1, student2, student3, student4, student5 };
 
             /// For the Student Class
+            Console.WriteLine($"The current Student[] Array is UNSORTED with the following objects...");
+            PrintArray(students);
             Console.WriteLine("Please select a sorting algorithm:");
             Console.WriteLine("1: Bubble Sort");
             Console.WriteLine("2: Selection Sort");
             Console.WriteLine("3: Insertion Sort");
-
+            Console.WriteLine("4: Merge Sort");
 
             string? userSelection = Console.ReadLine();
 
@@ -45,23 +60,11 @@ namespace SortingAlgorithms
             //student1.name = "Melissa";
             //student1.gpa = 3.0;
 
-            Student student1 = new Student("Jill Stein", 4.0);
-
-            Student student2 = new Student("Matias", 3.0);
-
-            Student student3 = new Student("Matt", 3.9);
-
-            Student student5 = new Student("Carlos", 2.4);
-
-            Student student4 = new Student("Trump", 0.1);
-
-            Student[] students = { student1, student2, student3, student4, student5 };
-
             // Doesn't work! Constructor doesn't permit non-named Student objects
             // Student student3 = new Student(4.0);
 
             // Utilize a SWITCH statement to handle different possibilities
-            switch  (userSelection)
+            switch (userSelection)
             {
                 case "1":
                     // Commit Bubble activities
@@ -71,21 +74,27 @@ namespace SortingAlgorithms
                 case "2":
                     // Commit Selection activities
                     Console.WriteLine("Initiating Selection Sort...");
-
+                    SelectionSort(students);
                     break;
                 case "3":
                     // Commit Insertion activities
                     Console.WriteLine("Initiating Insertion Sort...");
+                    InsertionSort(students);
+                    break;
+                case "4":
+                    // Commit Merge activities
+                    Console.WriteLine("Initiating Merge Sort...");
+                    MergeSort(students);
                     break;
                 default:
                     // none of the cases matched
                     break;
             }
 
-            PrintStudentArray(students);
+            PrintArray(students);
 
             MergeSort(arr2);
-            PrintArray(arr2);
+            // PrintArray(arr2);
 
         }
 
@@ -98,7 +107,7 @@ namespace SortingAlgorithms
             Console.WriteLine();
         }
 
-        public static void PrintStudentArray(Student[] arrToSort)
+        public static void PrintArray(Student[] arrToSort)
         {
             foreach (var item in arrToSort)
             {
@@ -192,6 +201,35 @@ namespace SortingAlgorithms
             }
         }
 
+        public static void SelectionSort(Student[] arrToSort)
+        {
+            // minIndex keeps track of the smallest index in each iteration
+            // temp is used as temporary storage
+            int minIndex;
+            Student temp;
+
+            // O(n) how many times we need to go though the unsorted array
+            for (int i = 0; i < arrToSort.Length; i++)
+            {
+                minIndex = i; // set the minIdex equal to current smallest index
+                for (int j = i; j < arrToSort.Length; j++) // loop through each element starting at i
+                {
+                    // if the element is smaller than the current minIndex
+                    if (arrToSort[j].gpa > arrToSort[minIndex].gpa)
+                    {
+                        // swap
+                        minIndex = j;
+                    }
+                }
+
+                // swap elements
+                // swap current i (which is smallest position with the smallest/min element)
+                temp = arrToSort[i];
+                arrToSort[i] = arrToSort[minIndex];
+                arrToSort[minIndex] = temp;
+            }
+        }
+
         public static void InsertionSort(int[] arrToSort)
         {
             int temp, i;
@@ -213,16 +251,38 @@ namespace SortingAlgorithms
             }
         }
 
+        public static void InsertionSort(Student[] arrToSort)
+        {
+            Student temp;
+            int i;
+            for (i = 1; i < arrToSort.Length; i++)
+            {
+                temp = arrToSort[i]; // Store the current element
+                int priorIndex = i - 1; // Start comparing with the element before the current one
+
+                // If our prior element is greater than our stored element, and we have not 
+                // reached the end of the array
+                while (priorIndex >= 0 && arrToSort[priorIndex].gpa < temp.gpa)
+                {
+                    arrToSort[priorIndex + 1] = arrToSort[priorIndex];
+                    priorIndex--;
+                }
+
+                // Need to do an assignment
+                arrToSort[priorIndex + 1] = temp;
+            }
+        }
+
+
         // Recursive function that splits the array up and merges it together
         public static void MergeSort(int[] arrToSort)
         {
-            if (arrToSort.Length <= 1) return; // Example of early return
+            if (arrToSort.Length <= 1) return; // Early return for arrays of length 1 or less
 
             int mid = arrToSort.Length / 2;
 
-            // Create left sub-array to hold left of the midpoint
+            // Create left and right sub-arrays
             int[] leftSubArray = new int[mid];
-
             int[] rightSubArray = new int[arrToSort.Length - mid];
 
             for (int i = 0; i < mid; i++)
@@ -235,9 +295,114 @@ namespace SortingAlgorithms
                 rightSubArray[i - mid] = arrToSort[i];
             }
 
+            // Recursively sort the sub-arrays
             MergeSort(leftSubArray);
             MergeSort(rightSubArray);
-            
+
+            // Merge the sorted sub-arrays
+            Merge(arrToSort, leftSubArray, rightSubArray);
+        }
+
+        private static void Merge(int[] arrToSort, int[] leftSubArray, int[] rightSubArray)
+        {
+            int leftIndex = 0, rightIndex = 0, sortedIndex = 0;
+
+            // Merge elements from leftSubArray and rightSubArray in sorted order
+            while (leftIndex < leftSubArray.Length && rightIndex < rightSubArray.Length)
+            {
+                if (leftSubArray[leftIndex] >= rightSubArray[rightIndex])
+                {
+                    arrToSort[sortedIndex] = leftSubArray[leftIndex];
+                    leftIndex++;
+                }
+                else
+                {
+                    arrToSort[sortedIndex] = rightSubArray[rightIndex];
+                    rightIndex++;
+                }
+                sortedIndex++;
+            }
+
+            // Copy any remaining elements from leftSubArray
+            while (leftIndex < leftSubArray.Length)
+            {
+                arrToSort[sortedIndex] = leftSubArray[leftIndex];
+                leftIndex++;
+                sortedIndex++;
+            }
+
+            // Copy any remaining elements from rightSubArray
+            while (rightIndex < rightSubArray.Length)
+            {
+                arrToSort[sortedIndex] = rightSubArray[rightIndex];
+                rightIndex++;
+                sortedIndex++;
+            }
+        }
+
+        public static void MergeSort(Student[] arrToSort)
+        {
+            if (arrToSort.Length <= 1) return; // Early return for arrays of length 1 or less
+
+            int mid = arrToSort.Length / 2;
+
+            // Create left and right sub-arrays
+            Student[] leftSubArray = new Student[mid];
+            Student[] rightSubArray = new Student[arrToSort.Length - mid];
+
+            for (int i = 0; i < mid; i++)
+            {
+                leftSubArray[i] = arrToSort[i];
+            }
+
+            for (int i = mid; i < arrToSort.Length; i++)
+            {
+                rightSubArray[i - mid] = arrToSort[i];
+            }
+
+            // Recursively sort the sub-arrays
+            MergeSort(leftSubArray);
+            MergeSort(rightSubArray);
+
+            // Merge the sorted sub-arrays
+            Merge(arrToSort, leftSubArray, rightSubArray);
+        }
+
+        private static void Merge(Student[] arrToSort, Student[] leftSubArray, Student[] rightSubArray)
+        {
+            int leftIndex = 0, rightIndex = 0, sortedIndex = 0;
+
+            // Merge elements from leftSubArray and rightSubArray in sorted order
+            while (leftIndex < leftSubArray.Length && rightIndex < rightSubArray.Length)
+            {
+                if (leftSubArray[leftIndex].gpa >= rightSubArray[rightIndex].gpa)
+                {
+                    arrToSort[sortedIndex] = leftSubArray[leftIndex];
+                    leftIndex++;
+                }
+                else
+                {
+                    arrToSort[sortedIndex] = rightSubArray[rightIndex];
+                    rightIndex++;
+                }
+                sortedIndex++;
+            }
+
+            // Copy any remaining elements from leftSubArray
+            while (leftIndex < leftSubArray.Length)
+            {
+                arrToSort[sortedIndex] = leftSubArray[leftIndex];
+                leftIndex++;
+                sortedIndex++;
+            }
+
+            // Copy any remaining elements from rightSubArray
+            while (rightIndex < rightSubArray.Length)
+            {
+                arrToSort[sortedIndex] = rightSubArray[rightIndex];
+                rightIndex++;
+                sortedIndex++;
+            }
         }
 
     }
