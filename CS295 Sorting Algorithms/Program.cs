@@ -38,6 +38,7 @@ namespace SortingAlgorithms
             Console.WriteLine("2: Selection Sort");
             Console.WriteLine("3: Insertion Sort");
             Console.WriteLine("4: Merge Sort");
+            Console.WriteLine("5: Quick Sort");
 
             string? userSelection = Console.ReadLine();
 
@@ -87,6 +88,15 @@ namespace SortingAlgorithms
                     Console.Write("Time taken to execute this algorithm:");
                     Console.WriteLine(stopwatch.Elapsed.ToString());
                     break;
+                case "5":
+                    // Commit QuickSort acitivities
+                    Console.WriteLine("Initiating Quick Sort...");
+                    stopwatch.Start();
+                    QuickSort(arr2);
+                    stopwatch.Stop();
+                    Console.Write("Time taken to execute this algorithm:");
+                    Console.WriteLine(stopwatch.Elapsed.ToString());
+                    break;
                 default:
                     // none of the cases matched
                     break;
@@ -95,7 +105,7 @@ namespace SortingAlgorithms
             PrintArray(students);
 
             //MergeSort(arr2);
-            //PrintArray(arr2);
+            PrintArray(arr2);
 
         }
 
@@ -274,7 +284,6 @@ namespace SortingAlgorithms
             }
         }
 
-
         // Recursive function that splits the array up and merges it together
         public static void MergeSort(int[] arrToSort)
         {
@@ -402,5 +411,65 @@ namespace SortingAlgorithms
             }
         }
 
+        /// <summary>
+        /// Recursive function that utilizes a quick sort algorithm to sort the passed-in array
+        /// Also requires partner method Partition to function
+        /// </summary>
+        /// <param name="arrToSort"> The array to be sorted </param>
+        /// <param name="low"> Smaller index of the subarray </param>
+        /// <param name="high"> Larger index of the subarry </param>
+        public static void QuickSort(int[] arr)
+        {
+            if (arr == null) return;
+            if (arr.Length == 0) return;
+            QuickSortHelper(arr, 0, arr.Length - 1);
+        }
+
+
+        /// <summary>
+        /// Utilizes a quick sort algorithm to sort the passed in array
+        /// </summary>
+        /// <param name="arr"> the array which should be sorted </param>
+        /// <param name="low"> the smaller index of the (sub)array </param>
+        /// <param name="high"> the larger index of the (sub)array </param>
+        public static void QuickSortHelper(int[] arr, int low, int high)
+        {
+            if (low < high)
+            {
+                // Partition return pivot location to us
+                int pivotIndex = Partition(arr, low, high);
+
+                // Call QuickSort again on the new subarrays pased on pivots position
+                QuickSortHelper(arr, low, pivotIndex - 1);
+                QuickSortHelper(arr, pivotIndex + 1, high);
+            }
+        }
+
+        public static int Partition(int[] arr, int low, int high)
+        {
+            int pivot = arr[high]; // setting pivot to be the last value in the array
+            int i = low - 1;
+
+            for (int j = low; j < high; j++)
+            {
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    Swap(arr, i, j);
+                }
+            }
+
+            Swap(arr, ++i, high);
+            return i;
+        }
+
+        public static void Swap(int[] arr, int i, int j)
+        {
+            // swap - could also move this into a helper method
+            int temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+        }
+    
     }
 }
