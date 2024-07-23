@@ -12,25 +12,10 @@ namespace SortingAlgorithms
             //BubbleSort(arr1);
             //PrintArray(arr1);
             Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            BubbleSort(arr1);
-            stopwatch.Stop();
+
             /// Console.WriteLine(stopwatch.Elapsed.ToString());
             int[] arr2 = { 90, 3, 2, 56, 32, 34, 65, 68, 76, 1, 0, 100, 8 };
-            //PrintArray(arr2);
-            //InsertionSort(arr2);
-            //PrintArray(arr2);
-            stopwatch.Restart();
-            stopwatch.Start();
-            SelectionSort(arr1);
-            stopwatch.Stop();
-            /// Console.WriteLine(stopwatch.Elapsed.ToString());
 
-            stopwatch.Restart();
-            stopwatch.Start();
-            InsertionSort(arr1);
-            stopwatch.Stop();
-            /// Console.WriteLine(stopwatch.Elapsed.ToString());
             
             Student student1 = new Student("Jill Stein", 4.0);
 
