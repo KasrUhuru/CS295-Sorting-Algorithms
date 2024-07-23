@@ -69,22 +69,38 @@ namespace SortingAlgorithms
                 case "1":
                     // Commit Bubble activities
                     Console.WriteLine("Initiating Bubble Sort...");
+                    stopwatch.Start();
                     BubbleSort(students);
+                    stopwatch.Stop();
+                    Console.Write("Time taken to execute this algorithm:");
+                    Console.WriteLine(stopwatch.Elapsed.ToString());
                     break;
                 case "2":
                     // Commit Selection activities
                     Console.WriteLine("Initiating Selection Sort...");
+                    stopwatch.Start();
                     SelectionSort(students);
+                    stopwatch.Stop();
+                    Console.Write("Time taken to execute this algorithm:");
+                    Console.WriteLine(stopwatch.Elapsed.ToString());
                     break;
                 case "3":
                     // Commit Insertion activities
                     Console.WriteLine("Initiating Insertion Sort...");
+                    stopwatch.Start();
                     InsertionSort(students);
+                    stopwatch.Stop();
+                    Console.Write("Time taken to execute this algorithm:");
+                    Console.WriteLine(stopwatch.Elapsed.ToString());
                     break;
                 case "4":
                     // Commit Merge activities
                     Console.WriteLine("Initiating Merge Sort...");
+                    stopwatch.Start();
                     MergeSort(students);
+                    stopwatch.Stop();
+                    Console.Write("Time taken to execute this algorithm:");
+                    Console.WriteLine(stopwatch.Elapsed.ToString());
                     break;
                 default:
                     // none of the cases matched
