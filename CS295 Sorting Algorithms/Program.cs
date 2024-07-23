@@ -94,8 +94,8 @@ namespace SortingAlgorithms
 
             PrintArray(students);
 
-            MergeSort(arr2);
-            // PrintArray(arr2);
+            //MergeSort(arr2);
+            //PrintArray(arr2);
 
         }
 
@@ -309,35 +309,31 @@ namespace SortingAlgorithms
             int leftIndex = 0, rightIndex = 0, sortedIndex = 0;
 
             // Merge elements from leftSubArray and rightSubArray in sorted order
+            // While leftSubArray has values and the rightSubArray has values...
+            // Evaluate the lesser value and make assignments
             while (leftIndex < leftSubArray.Length && rightIndex < rightSubArray.Length)
             {
                 if (leftSubArray[leftIndex] >= rightSubArray[rightIndex])
                 {
-                    arrToSort[sortedIndex] = leftSubArray[leftIndex];
-                    leftIndex++;
+                    arrToSort[sortedIndex++] = leftSubArray[leftIndex++];
                 }
                 else
                 {
-                    arrToSort[sortedIndex] = rightSubArray[rightIndex];
-                    rightIndex++;
+                    arrToSort[sortedIndex++] = rightSubArray[rightIndex++];
                 }
-                sortedIndex++;
+                // sortedIndex++;
             }
 
             // Copy any remaining elements from leftSubArray
             while (leftIndex < leftSubArray.Length)
             {
-                arrToSort[sortedIndex] = leftSubArray[leftIndex];
-                leftIndex++;
-                sortedIndex++;
+                arrToSort[sortedIndex++] = leftSubArray[leftIndex++];
             }
 
             // Copy any remaining elements from rightSubArray
             while (rightIndex < rightSubArray.Length)
             {
-                arrToSort[sortedIndex] = rightSubArray[rightIndex];
-                rightIndex++;
-                sortedIndex++;
+                arrToSort[sortedIndex++] = rightSubArray[rightIndex++];
             }
         }
 
